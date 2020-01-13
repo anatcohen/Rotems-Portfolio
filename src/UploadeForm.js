@@ -1,41 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as firebase from 'firebase';
 
 export default function UploadForm(props) {
-    const onSubmit = e => {
-        e.preventDefault();
+    const [loading, setLoading] = useState(false);
 
-        if (document.getElementById('name').value !== "" && document.getElementById('file').files.length !== 0) {
-            let file = document.getElementById('file').files[0];
-            let storageRef = firebase.storage().ref().child(document.getElementById('name').value);
-            //Add image to storage 
-            storageRef.put(file).then(snapshot => {
-                // Get's image's url
-                storageRef.getDownloadURL().then(res => {
-                    // Adds to database
-                    firebase.firestore().collection('portfolio').add({
-                        name: document.getElementById('name').value,
-                        type: document.getElementById('type').value,
-                        description: document.getElementById('description').value,
-                        url: res
-                    });
+    const onFormSubmit = e => {
+        e.preventDefault();
+        setLoading(true);
+
+        let storageRef = firebase.storage().ref().child(document.getElementById('name').value);
+        //Adds image to storage 
+        storageRef.put(document.getElementById('file').files[0]).then(snapshot => {
+            // Gets image's url
+            storageRef.getDownloadURL().then(res => {
+                // Adds to database
+                firebase.firestore().collection('portfolio').add({
+                    name: document.getElementById('name').value,
+                    type: document.getElementById('type').value,
+                    description: document.getElementById('description').value,
+                    url: res
                 });
-                console.log('done')
             });
-        }
-        else {
-            console.log('error');
-        }
+            setLoading(false);
+        });
+
+    }, onFormChange = e => {
+        let bAreFieldsEmpty = true
+        if (document.getElementById('file').value !== "" && document.getElementById('name').value !== "" && document.getElementById('type').value !== "") bAreFieldsEmpty = false;
+        document.getElementById('submitBtn').style.visibility = bAreFieldsEmpty ? 'hidden' : 'visible';
     }
     return (
         <>
-            <form onSubmit={onSubmit} autoComplete="off">
+            <p>Upload an item: </p>
+            <form onSubmit={onFormSubmit} autoComplete="off" onChange={onFormChange}>
                 <input id="name" placeholder="File Name" /><br />
                 <input id="type" placeholder="File type" /> <br />
                 <input id="description" placeholder="Description" /> <br />
                 <input type="file" id="file" />
-                <button>upload</button>
+                <button style={{ visibility: 'hidden' }} id='submitBtn'>upload</button>
             </form>
+            {loading ? "loading" : ""}
         </>
     );
 }

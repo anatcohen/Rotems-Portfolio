@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as firebase from 'firebase';
-
-export default function Portfolio(props) {
+import Item from './Item';
+export default function Portfolio() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function Portfolio(props) {
     return (
         <>
             <p>portfolio</p>
-            {data.map((doc, index) => <img src={doc.url} alt="oops" key={index} />)}
+            {data.map((doc, index) => <Item url={doc.url} name={doc.name} key={index} />)}
         </>
     );
 }
