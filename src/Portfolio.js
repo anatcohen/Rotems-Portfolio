@@ -5,19 +5,25 @@ import { LS_COLLECTION } from './UploadeForm';
 
 export default function Portfolio() {
     const [data, setData] = useState([]),
+        [display, setDisplay] = useState(data),
         // Changes item's view to either grid or list view
         onViewClick = e => {
             document.getElementById('item-container').style.flexDirection = e.target.id;
-        }
-
-        // Adds checkboxs to the type
-
-        , addCheckBoxs = () => {
+        },
+        onCheckBoxClick = e => {
+            // Add to display
+            if (e.target.checked) setDisplay([...display, ...data.filter(doc => doc.type === e.target.id)]);
+            // Remove from display
+            else setDisplay(data.filter(doc => doc.type !== e.target.id))
+        },
+        // Adds checkboxs according to the different item types
+        addCheckBoxs = () => {
             let arrTemp = JSON.parse(localStorage.getItem(LS_COLLECTION));
-            return <> {arrTemp.map((type, index) => {
-                return <div key={index} > {type} < input type="checkbox" id={type} /></div>
-            })
-            }</>;
+            return <form onChange={onCheckBoxClick}>
+                {arrTemp.map((type, index) => {
+                    return <div key={index}>{type} < input type="checkbox" defaultChecked={true} id={type} /></div>
+                })}
+            </form>;
         }
 
     useEffect(() => {
@@ -27,7 +33,8 @@ export default function Portfolio() {
                 arr.push(doc.data());
                 // setData(...data, doc.data())
             });
-            setData(arr)
+            setData(arr);
+            setDisplay(arr);
         });
     }, []);
 
@@ -44,7 +51,7 @@ export default function Portfolio() {
                 </>
             </div>
             <div id="item-container">
-                {data.map((doc, index) => <Item url={doc.url} name={doc.name} description={doc.description} key={index} />)}
+                {display.map((doc, index) => <Item url={doc.url} name={doc.name} description={doc.description} key={index} />)}
             </div>
         </>
     );

@@ -4,18 +4,20 @@ export const LS_COLLECTION = 'arrCollections';
 
 export default function UploadForm(props) {
     const [loading, setLoading] = useState(false);
+    // On submit- Uploads file to database
     const onFormSubmit = e => {
         e.preventDefault();
+        setLoading(true);
+
         let fileName = document.getElementById('name').value,
             fileType = document.getElementById('type').value,
             storageRef = firebase.storage().ref().child(fileName);
 
-        setLoading(true);
         //Adds image to storage 
         storageRef.put(document.getElementById('file').files[0]).then(snapshot => {
             // Gets image's url
             storageRef.getDownloadURL().then(res => {
-                // Adds to database
+                // Adds other info to the database
                 firebase.firestore().collection('portfolio').add({
                     name: fileName,
                     type: fileType,
@@ -30,7 +32,6 @@ export default function UploadForm(props) {
             if (arrTemp === null) arrTemp = [fileType];
             else if (arrTemp.filter(name => name === fileType).length === 0) arrTemp.push(fileType);
             localStorage.setItem(LS_COLLECTION, JSON.stringify(arrTemp));
-            console.log(localStorage.getItem(LS_COLLECTION));
         });
     }, onFormChange = e => {
         let bAreFieldsEmpty = true
