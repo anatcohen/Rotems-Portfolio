@@ -7,14 +7,13 @@ export default function UploadForm(props) {
     const onFormSubmit = e => {
         e.preventDefault();
         setLoading(true);
-
         let storageRef = firebase.storage().ref().child(document.getElementById('name').value);
         //Adds image to storage 
         storageRef.put(document.getElementById('file').files[0]).then(snapshot => {
             // Gets image's url
             storageRef.getDownloadURL().then(res => {
                 // Adds to database
-                firebase.firestore().collection('portfolio').add({
+                firebase.firestore().collection(document.getElementById('type').value).add({
                     name: document.getElementById('name').value,
                     type: document.getElementById('type').value,
                     description: document.getElementById('description').value,
