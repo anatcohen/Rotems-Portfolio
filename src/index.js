@@ -4,6 +4,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import * as firebase from 'firebase';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const config = {
     apiKey: "AIzaSyBKblPOLfGwhrBuBGl9DIexjpYgT6ns4Cg",
@@ -19,7 +21,9 @@ firebase.initializeApp(config);
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </BrowserRouter>
     , document.getElementById('root'));
 
