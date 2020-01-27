@@ -17,13 +17,15 @@ export function setDisplay(data) {
 export function changeLoading(value) {
     return { type: CHANGE_LOADING, value: value }
 }
-export function changeDataRetrieved() {
-    return { type: CHANGE_DATA_RETRIEVED }
+export function changeDataRetrieved(value) {
+    return { type: CHANGE_DATA_RETRIEVED, value: value }
 }
 // Uploads files to database with it's info
 export function addToDataBase(file, fileName, fileType, fileDes, date) {
     return dispatch => {
+        // Changes loading and data retrieved status'
         dispatch(changeLoading(true));
+        dispatch(changeDataRetrieved(false));
         //Adds image to storage 
         firebase.storage().ref().child(fileName).put(file).then(snapshot => {
             // Gets image's url
@@ -60,7 +62,17 @@ export function getFromDataBase() {
             });
             dispatch(setData(arrData));
             dispatch(setDisplay(arrData));
-            dispatch(changeDataRetrieved());
+            dispatch(changeDataRetrieved(true));
         });
+    }
+}
+
+export function deleteDoc(id, data) {
+    return dispatch => {
+        console.log(id);
+        firebase.firestore().collection("portfolio").doc(id).delete().then(() => {
+            console.log('deleted');
+            dispatch(setData(data.filter(doc => doc.id !== id)));
+        })
     }
 }

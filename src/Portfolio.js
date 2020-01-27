@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Item from './Item';
 import { LS_COLLECTION } from './redux/actions';
 
 export default function Portfolio(props) {
-    const [data, setData] = useState([]),
-        [display, setDisplay] = useState(data),
-        // Changes item's view to either grid or list view
-        onViewClick = e => {
-            document.getElementById('item-container').style.flexDirection = e.target.id;
-        },
+    // Changes item's view to either grid or list view
+    const onViewClick = e => {
+        document.getElementById('item-container').style.flexDirection = e.target.id;
+    },
         onCheckBoxClick = e => {
             let arrData = e.target.checked ?
                 [...props.display.data, ...props.data.data.filter(doc => doc.type === e.target.id)] :
@@ -38,11 +36,15 @@ export default function Portfolio(props) {
                     <button id='column' />
                 </div>
                 <>
+                    <button>Edit</button>
                     {addCheckBoxs()}
                 </>
             </div>
             <div id="item-container">
-                {props.display.data.map((doc, index) => <Item url={doc.url} name={doc.name} description={doc.description} key={index} />)}
+                {props.display.data.map((doc, index) => {
+                    console.log(doc.id);
+                    return <Item url={doc.url} name={doc.name} description={doc.description} id={doc.id} onClick={props.deleteDoc} data={props.data.data} key={index} />
+                })}
             </div>
         </>
     );

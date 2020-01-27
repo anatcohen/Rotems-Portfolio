@@ -31,7 +31,7 @@ function statusReducer(state = INITIAL_STATUS_STATE, action) {
         case actions.CHANGE_LOADING:
             return { ...state, loading: action.value };
         case actions.CHANGE_DATA_RETRIEVED:
-            return { ...state, dataRetrieved: true };
+            return { ...state, dataRetrieved: action.value };
         default:
             return state;
     }
