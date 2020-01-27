@@ -5,7 +5,6 @@ export default function Item(props) {
     const onClick = e => {
         console.log(props.id)
         props.onClick(props.id, props.data)
-
     }
 
     return (

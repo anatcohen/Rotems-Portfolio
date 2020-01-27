@@ -8,17 +8,16 @@ export const CHANGE_LOADING = 'CHANGE_LOADING'
 export const CHANGE_DATA_RETRIEVED = 'CHANGE_DATA_RETRIEVED'
 
 export function setData(data) {
-    return { type: SET_DATA, data: data }
+    return { type: SET_DATA, data }
 }
-
 export function setDisplay(data) {
-    return { type: SET_DISPLAY, data: data }
+    return { type: SET_DISPLAY, data }
 }
 export function changeLoading(value) {
-    return { type: CHANGE_LOADING, value: value }
+    return { type: CHANGE_LOADING, value }
 }
 export function changeDataRetrieved(value) {
-    return { type: CHANGE_DATA_RETRIEVED, value: value }
+    return { type: CHANGE_DATA_RETRIEVED, value }
 }
 // Uploads files to database with it's info
 export function addToDataBase(file, fileName, fileType, fileDes, date) {
@@ -31,12 +30,14 @@ export function addToDataBase(file, fileName, fileType, fileDes, date) {
             // Gets image's url
             firebase.storage().ref().child(fileName).getDownloadURL().then(res => {
                 // Adds other info to the database
-                firebase.firestore().collection('portfolio').add({
+                let id = String(Date.now());
+                firebase.firestore().collection('portfolio').doc(id).set({
                     name: fileName,
                     type: fileType,
                     description: fileDes,
                     url: res,
-                    time: date
+                    time: date,
+                    id
                 });
             });
 
@@ -69,10 +70,10 @@ export function getFromDataBase() {
 
 export function deleteDoc(id, data) {
     return dispatch => {
-        console.log(id);
         firebase.firestore().collection("portfolio").doc(id).delete().then(() => {
             console.log('deleted');
-            dispatch(setData(data.filter(doc => doc.id !== id)));
+            // dispatch(setData(data.filter(doc => doc.id !== id)));
+            dispatch(changeDataRetrieved(false));
         })
     }
 }

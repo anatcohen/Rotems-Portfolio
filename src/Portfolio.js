@@ -25,7 +25,7 @@ export default function Portfolio(props) {
         }
 
     //  Checks if data has been retrieved from database yet
-    useEffect(() => { if (!props.status.dataRetrieved) props.getFromDataBase() }, []);
+    useEffect(() => { if (!props.status.dataRetrieved) props.getFromDataBase() }, [props.status.dataRetrieved]);
 
     return (
         <>
@@ -42,7 +42,6 @@ export default function Portfolio(props) {
             </div>
             <div id="item-container">
                 {props.display.data.map((doc, index) => {
-                    console.log(doc.id);
                     return <Item url={doc.url} name={doc.name} description={doc.description} id={doc.id} onClick={props.deleteDoc} data={props.data.data} key={index} />
                 })}
             </div>
