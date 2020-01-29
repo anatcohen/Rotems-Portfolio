@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './NavBar';
 import Portfolio from './Portfolio';
-import UploadForm from './UploadeForm'
 import SignIn from './SignIn'
+import Edit from './Edit'
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
 export function App(props) {
+  //  Checks if data has been retrieved from database yet
+  useEffect(() => { if (!props.status.dataRetrieved) props.getFromDataBase() }, [props]);
+
   return (
     <div className="body">
       <NavBar />
       <div className="content">
         <Route exact path="/SignIn" render={(routeProps) => <SignIn {...routeProps} {...props} />} />
-        <Route exact path="/UploadForm" render={(routeProps) => <UploadForm {...routeProps} {...props} />} />
+        <Route exact path="/Edit" render={(routeProps) => <Edit {...routeProps} {...props} />} />
         <Route exact path="/Portfolio" render={(routeProps) => <Portfolio {...routeProps} {...props} />} />
 
       </div>

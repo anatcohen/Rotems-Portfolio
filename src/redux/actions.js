@@ -1,6 +1,4 @@
 import * as firebase from 'firebase';
-
-export const LS_COLLECTION = 'arrCollections';
 //Action types
 export const SET_DATA = 'SET_DATA'
 export const SET_DISPLAY = 'SET_DISPLAY'
@@ -44,11 +42,6 @@ export function addToDataBase(file, fileName, fileType, fileDes, date) {
             //Initilises upload form and loading sign
             document.getElementById('uploadForm').reset();
             dispatch(changeLoading(false));
-            // Adds collection's name to localStorage
-            let arrTemp = JSON.parse(localStorage.getItem(LS_COLLECTION));
-            if (arrTemp === null) arrTemp = [fileType];
-            else if (arrTemp.filter(name => name === fileType).length === 0) arrTemp.push(fileType);
-            localStorage.setItem(LS_COLLECTION, JSON.stringify(arrTemp));
         });
     }
 }

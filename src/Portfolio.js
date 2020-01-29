@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Item from './Item';
-import { LS_COLLECTION } from './redux/actions';
 
 export default function Portfolio(props) {
     // Changes item's view to either grid or list view
@@ -16,16 +15,12 @@ export default function Portfolio(props) {
         },
         // Adds checkboxs according to the different item types
         addCheckBoxs = () => {
-            let arrTemp = JSON.parse(localStorage.getItem(LS_COLLECTION));
             return <form onChange={onCheckBoxClick}>
-                {arrTemp.map((type, index) => {
-                    return <div key={index}>{type} < input type="checkbox" defaultChecked={true} id={type} /></div>
-                })}
-            </form>;
+                {props.data.data.map((value, index) =>
+                    <div key={index}>{value.type} <input type="checkbox" defaultChecked={true} id={value.type} /></div>
+                )}
+            </form>
         }
-
-    //  Checks if data has been retrieved from database yet
-    useEffect(() => { if (!props.status.dataRetrieved) props.getFromDataBase() }, [props.status.dataRetrieved]);
 
     return (
         <>
