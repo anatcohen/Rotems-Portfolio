@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
 import * as firebase from "firebase";
-// Add the Firebase services that you want to use
-//import "firebase/auth";
-import "firebase/firestore";
 import * as firebaseui from 'firebaseui';
 
 export default function SignIn(props) {

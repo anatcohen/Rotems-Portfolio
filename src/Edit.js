@@ -7,10 +7,9 @@ export default function Edit(props) {
     return (
         <>
             <UploadForm {...props} />
-            {console.log(props)}
             <div id="item-container">
                 {props.data.data.map((doc, index) => {
-                    return <Item url={doc.url} name={doc.name} description={doc.description} id={doc.id} onClick={props.deleteDoc} data={props.data.data} key={index} />
+                    return <Item doc={doc} onClick={props.deleteDoc} inEdit={true} key={index} />
                 })}
             </div>
         </>

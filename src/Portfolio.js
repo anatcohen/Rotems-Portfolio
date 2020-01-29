@@ -37,7 +37,7 @@ export default function Portfolio(props) {
             </div>
             <div id="item-container">
                 {props.display.data.map((doc, index) => {
-                    return <Item url={doc.url} name={doc.name} description={doc.description} id={doc.id} onClick={props.deleteDoc} data={props.data.data} key={index} />
+                    return <Item doc={doc} onClick={props.deleteDoc} data={props.data.data} inEdit={false} key={index} />
                 })}
             </div>
         </>
