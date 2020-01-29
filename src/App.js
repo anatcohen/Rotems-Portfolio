@@ -2,9 +2,8 @@ import React from 'react';
 import './App.css';
 import NavBar from './NavBar';
 import Portfolio from './Portfolio';
-import Contact from './Contact'
 import UploadForm from './UploadeForm'
-import SignIn from './signIn'
+import SignIn from './SignIn'
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -17,7 +16,7 @@ export function App(props) {
         <Route exact path="/SignIn" render={(routeProps) => <SignIn {...routeProps} {...props} />} />
         <Route exact path="/UploadForm" render={(routeProps) => <UploadForm {...routeProps} {...props} />} />
         <Route exact path="/Portfolio" render={(routeProps) => <Portfolio {...routeProps} {...props} />} />
-        <Route exact path="/Contact" render={(routeProps) => <Contact {...routeProps} />} />
+
       </div>
     </div>
   );

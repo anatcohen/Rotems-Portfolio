@@ -59,7 +59,6 @@ export function getFromDataBase() {
         firebase.firestore().collection("portfolio").get().then(querySnapshot => {
             querySnapshot.forEach(function (doc) {
                 arrData.push(doc.data());
-                // setData(...data, doc.data())
             });
             dispatch(setData(arrData));
             dispatch(setDisplay(arrData));
@@ -71,8 +70,6 @@ export function getFromDataBase() {
 export function deleteDoc(id, data) {
     return dispatch => {
         firebase.firestore().collection("portfolio").doc(id).delete().then(() => {
-            console.log('deleted');
-            // dispatch(setData(data.filter(doc => doc.id !== id)));
             dispatch(changeDataRetrieved(false));
         })
     }

@@ -7,7 +7,6 @@ export default function NavBar() {
       <div className="headerButtons">
         <Link to="/"><button>Home</button></Link>
         <Link to='/Portfolio'><button>Portfolio</button></Link>
-        <Link to='/Contact'><button>Contact</button></Link>
         <Link to='/SignIn'><button>Sign In</button></Link>
       </div>
     </header >
