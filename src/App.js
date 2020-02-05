@@ -10,7 +10,9 @@ import * as actions from './redux/actions';
 
 export function App(props) {
   //  Checks if data has been retrieved from database yet
-  useEffect(() => { if (!props.status.dataRetrieved) props.getFromDataBase() }, [props]);
+  useEffect(() => {
+    if (!props.status.dataRetrieved) props.getFromDataBase()
+  }, [props.status.dataRetrieved]);
 
   return (
     <div className="body">
@@ -19,7 +21,6 @@ export function App(props) {
         <Route exact path="/SignIn" render={(routeProps) => <SignIn {...routeProps} {...props} />} />
         <Route exact path="/Edit" render={(routeProps) => <Edit {...routeProps} {...props} />} />
         <Route exact path="/Portfolio" render={(routeProps) => <Portfolio {...routeProps} {...props} />} />
-
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ export default function Item(props) {
 
     return (
         <div className="item">
-            {console.log(props)}
             <button onClick={onClick} style={{ visibility: props.inEdit ? 'visible' : 'hidden' }}>X</button>
             <h1>{props.doc.name}</h1>
             <h3>{props.doc.description}</h3>

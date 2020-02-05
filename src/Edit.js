@@ -3,7 +3,6 @@ import UploadForm from './UploadeForm';
 import Item from './Item';
 
 export default function Edit(props) {
-    // PAGE FOR ADMIN TO EITHER UPLOAD FORM OR EDIT OTHER ITEMS - DELETE/RENAME
     return (
         <>
             <UploadForm {...props} />

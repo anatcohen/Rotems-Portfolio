@@ -18,23 +18,22 @@ export function changeDataRetrieved(value) {
     return { type: CHANGE_DATA_RETRIEVED, value }
 }
 // Uploads files to database with it's info
-export function addToDataBase(file, fileName, fileType, fileDes, date) {
+export function addToDataBase(file, name, type, description, date) {
     return dispatch => {
-        // Changes loading and data retrieved status'
         dispatch(changeLoading(true));
-        dispatch(changeDataRetrieved(false));
+
         //Adds image to storage 
-        firebase.storage().ref().child(fileName).put(file).then(snapshot => {
+        firebase.storage().ref().child(name).put(file).then(snapshot => {
             // Gets image's url
-            firebase.storage().ref().child(fileName).getDownloadURL().then(res => {
+            firebase.storage().ref().child(name).getDownloadURL().then(res => {
                 // Adds other info to the database
                 let id = String(Date.now());
                 firebase.firestore().collection('portfolio').doc(id).set({
-                    name: fileName,
-                    type: fileType,
-                    description: fileDes,
+                    name,
+                    type,
+                    description,
                     url: res,
-                    time: date,
+                    date,
                     id
                 });
             });
@@ -42,6 +41,7 @@ export function addToDataBase(file, fileName, fileType, fileDes, date) {
             //Initilises upload form and loading sign
             document.getElementById('uploadForm').reset();
             dispatch(changeLoading(false));
+            dispatch(changeDataRetrieved(false));
         });
     }
 }

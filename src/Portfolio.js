@@ -15,9 +15,13 @@ export default function Portfolio(props) {
         },
         // Adds checkboxs according to the different item types
         addCheckBoxs = () => {
+            // Creates a set of data types
+            let types = new Set();
+            props.data.data.map(value => types.add(value.type));
+
             return <form onChange={onCheckBoxClick}>
-                {props.data.data.map((value, index) =>
-                    <div key={index}>{value.type} <input type="checkbox" defaultChecked={true} id={value.type} /></div>
+                {[...types].map((value, index) =>
+                    <div key={index}>{value} <input type="checkbox" defaultChecked={true} id={value} /></div>
                 )}
             </form>
         }
