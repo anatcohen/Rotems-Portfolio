@@ -30,6 +30,7 @@ function mapStateToProps(state) {
   return {
     data: state.data,
     display: state.display,
+    types: state.types,
     status: state.status
   }
 }

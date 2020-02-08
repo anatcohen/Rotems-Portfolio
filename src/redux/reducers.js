@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 const INITIAL_DATA_STATE = { data: [] };
 const INITIAL_DISPLAY_STATE = { data: [] }
+const INITIAL_TYPES_STATE = { data: [] }
 const INITIAL_STATUS_STATE = { loading: false, dataRetrieved: false };
 
 // Reducer for all the database data
@@ -25,6 +26,15 @@ function displayReducer(state = INITIAL_DISPLAY_STATE, action) {
     };
 }
 
+function typesReducer(state = INITIAL_TYPES_STATE, action) {
+    switch (action.type) {
+        case actions.SET_TYPES:
+            return { data: action.data };
+        default:
+            return state;
+    };
+}
+
 // Reducer for status data: loading status and staus or weather the data has been retrived yet
 function statusReducer(state = INITIAL_STATUS_STATE, action) {
     switch (action.type) {
@@ -40,5 +50,6 @@ function statusReducer(state = INITIAL_STATUS_STATE, action) {
 export default combineReducers({
     data: dataReducer,
     display: displayReducer,
+    types: typesReducer,
     status: statusReducer
 });
