@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function UploadForm(props) {
+    const [autoList, setAutoList] = useState([]);
     // On submit- Uploads file to database
     const onFormSubmit = e => {
         e.preventDefault();
@@ -9,11 +10,22 @@ export default function UploadForm(props) {
             document.getElementById('description').value,
             setDate(new Date()));
 
-    }, onFormChange = e => {
-        let bAreFieldsEmpty = true;
-        if (document.getElementById('file').value !== "" && document.getElementById('name').value !== "" && document.getElementById('type').value !== "") bAreFieldsEmpty = false;
-        document.getElementById('submitBtn').style.visibility = bAreFieldsEmpty ? 'hidden' : 'visible';
     },
+        // Checks if required fields (name, type, upload) have been filled out
+        onFormChange = e => {
+            let bAreFieldsEmpty = true;
+            if (document.getElementById('file').value !== "" && document.getElementById('name').value !== "" && document.getElementById('type').value !== "") bAreFieldsEmpty = false;
+            document.getElementById('submitBtn').style.visibility = bAreFieldsEmpty ? 'hidden' : 'visible';
+        },
+        // Creates an autocomplete list 
+        onTypeChange = e => {
+            setAutoList(props.types.data.filter(value => value.substring(0, e.currentTarget.value.length).toLowerCase() === e.currentTarget.value.toLowerCase()));
+        },
+        // On click on an element from the autocomplete list
+        onAutoListClick = e => {
+            document.getElementById('type').value = e.currentTarget.id;
+            setAutoList([]);
+        },
         // Returns today's full date 
         setDate = date => {
             // Gets day
@@ -61,14 +73,19 @@ export default function UploadForm(props) {
             // Gets year
             retDate += date.getFullYear();
             return retDate;
-        }
+        };
 
     return (
         <>
             <p>Upload an item: </p>
             <form onSubmit={onFormSubmit} autoComplete="off" onChange={onFormChange} id='uploadForm'>
                 <input id="name" placeholder="File Name" /><br />
-                <input id="type" placeholder="File type" /> <br />
+                <input id="type" placeholder="File type" onFocus={onTypeChange} onChange={onTypeChange} /> <br />
+                <>
+                    {
+                        autoList.map((value, index) => <div key={index} onClick={onAutoListClick} id={value}>{value}</div>)
+                    }
+                </>
                 <input id="description" placeholder="Description" /> <br />
                 <input type="file" id="file" />
                 <button style={{ visibility: 'hidden' }} id='submitBtn'>upload</button>

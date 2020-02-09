@@ -27,7 +27,7 @@ export default function Portfolio(props) {
                     <form onChange={onCheckBoxClick}>
                         {props.types.data.map((value, index) =>
                             <div key={index}>
-                                {value} <input type="checkbox" defaultChecked={true} id={value} defaultChecked={true} id={value}></input>
+                                {value} <input type="checkbox" defaultChecked={true} id={value}></input>
                             </div>
                         )}
                     </form>

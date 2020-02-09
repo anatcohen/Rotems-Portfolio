@@ -6,19 +6,19 @@ export const SET_TYPES = 'SET_TYPES'
 export const CHANGE_LOADING = 'CHANGE_LOADING'
 export const CHANGE_DATA_RETRIEVED = 'CHANGE_DATA_RETRIEVED'
 
-export function setData(data) {
+function setData(data) {
     return { type: SET_DATA, data }
 }
 export function setDisplay(data) {
     return { type: SET_DISPLAY, data }
 }
-export function setTypes(data) {
+function setTypes(data) {
     return { type: SET_TYPES, data }
 }
-export function changeLoading(value) {
+function changeLoading(value) {
     return { type: CHANGE_LOADING, value }
 }
-export function changeDataRetrieved(value) {
+function changeDataRetrieved(value) {
     return { type: CHANGE_DATA_RETRIEVED, value }
 }
 // Uploads files to database with it's info
